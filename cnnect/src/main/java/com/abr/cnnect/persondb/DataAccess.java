@@ -19,7 +19,7 @@ public class DataAccess implements PersonDB {
     }
 
     @Override
-    public int insertPerson(Person person) {
+    public int addPerson(Person person) {
 
         final String sql = "INSERT INTO person(id,name,lastname,email) VALUES(?,?,?,?)";
         jdbcTemplate.update(sql,
@@ -28,36 +28,31 @@ public class DataAccess implements PersonDB {
                 person.getLastName(),
                 person.getEmail()
                 );
-        return 1;
+        return 0;
     }
 
     @Override
     public List<Person> getAll() {
         final String sql = "SELECT id, name, lastname, email FROM person";
-        return jdbcTemplate.query(sql, (resultSet, i) -> {
-            return new Person(
-                    UUID.fromString(resultSet.getString("id")),
-                    resultSet.getString("name"),
-                    resultSet.getString("lastname"),
-                    resultSet.getString("email")
+        return jdbcTemplate.query(sql, (resultSet, i) -> new Person(
+                UUID.fromString(resultSet.getString("id")),
+                resultSet.getString("name"),
+                resultSet.getString("lastname"),
+                resultSet.getString("email")
 
 
-            );
-        });
+        ));
     }
 
     @Override
     public Optional<Person> selectPerson(UUID id) {
         final String sql = "SELECT id, name, lastname, email FROM person WHERE id = ?";
-        Person person =  jdbcTemplate.queryForObject(sql, new Object[]{id}, (resultSet, i) -> {
-            return new Person(
-                    UUID.fromString(resultSet.getString("id")),
-                    resultSet.getString("name"),
-                    resultSet.getString("lastname"),
-                    resultSet.getString("email")
-            );
-
-                }
+        Person person =  jdbcTemplate.queryForObject(sql, new Object[]{id}, (resultSet, i) -> new Person(
+                UUID.fromString(resultSet.getString("id")),
+                resultSet.getString("name"),
+                resultSet.getString("lastname"),
+                resultSet.getString("email")
+        )
                 );
         return Optional.ofNullable(person);
     }

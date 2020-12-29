@@ -20,8 +20,8 @@ public class PersonController {
     }
 
     @PostMapping
-    public void addPerson(@RequestBody Person person){
-        personService.addPerson(person);
+    public int addPerson(@RequestBody Person person){
+        return personService.addPerson(person);
     }
 
     @GetMapping

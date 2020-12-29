@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface PersonDB {
-    int insertPerson(Person person);
+    int addPerson(Person person);
     List<Person> getAll();
     Optional<Person> selectPerson(UUID id);
     boolean deletePerson(UUID id);
