@@ -19,7 +19,7 @@ public class DataAccess implements PersonDB {
     }
 
     @Override
-    public int addPerson(Person person) {
+    public boolean addPerson(Person person) {
 
         final String sql = "INSERT INTO person(id,name,lastname,email) VALUES(?,?,?,?)";
         jdbcTemplate.update(sql,
@@ -28,7 +28,7 @@ public class DataAccess implements PersonDB {
                 person.getLastName(),
                 person.getEmail()
                 );
-        return 0;
+        return true;
     }
 
     @Override

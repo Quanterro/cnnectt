@@ -22,11 +22,11 @@ public class PersonService {
         this.personDB = personDB;
     }
 
-    public int addPerson(Person person){
+    public boolean addPerson(Person person){
         if(!person.getEmail().contains(" "))
             return personDB.addPerson(person);
         else
-            return 1;
+            return false;
     }
 
     public List<Person> getAll() {
@@ -48,6 +48,6 @@ public class PersonService {
             return personDB.updatePersonEmail(id,person);
         else
             return false;
-
     }
+
 }

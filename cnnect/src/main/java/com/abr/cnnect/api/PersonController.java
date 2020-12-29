@@ -20,7 +20,7 @@ public class PersonController {
     }
 
     @PostMapping
-    public int addPerson(@RequestBody Person person){
+    public boolean addPerson(@RequestBody Person person){
         return personService.addPerson(person);
     }
 
