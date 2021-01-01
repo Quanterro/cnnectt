@@ -2,6 +2,7 @@ package com.abr.cnnect.persondb;
 
 import com.abr.cnnect.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.server.DelegatingServerHttpResponse;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -60,15 +61,17 @@ public class DataAccess implements PersonDB {
     @Override
     public boolean deletePerson(UUID id) {
         final String sql = "DELETE FROM person WHERE id = ?";
-        jdbcTemplate.update(sql,id);
-        return true;
+        if(jdbcTemplate.update(sql,id)==1)
+            return true;
+        return false;
     }
 
     @Override
     public boolean updatePersonEmail(UUID id, Person per) {
         final String sql = "UPDATE person SET email = ? WHERE id = ?";
-        jdbcTemplate.update(sql, per.getEmail(), id);
-        return true;
+        if(jdbcTemplate.update(sql, per.getEmail(), id)==1)
+            return true;
+        return false;
     }
 
 }
