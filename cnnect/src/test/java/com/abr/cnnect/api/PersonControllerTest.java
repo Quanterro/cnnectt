@@ -22,7 +22,6 @@ class PersonControllerTest {
     private Person person;
     private Person person1;
     private Person person2;
-    private Person person3;
     private PersonDB personDB = mock(PersonDB.class);
 
     private List<Person> personList;
