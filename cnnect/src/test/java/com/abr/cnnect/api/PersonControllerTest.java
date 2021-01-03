@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -20,6 +20,7 @@ class PersonControllerTest {
     private Person person;
     private Person person1;
     private Person person2;
+    private Person person3;
     private PersonDB personDB = mock(PersonDB.class);
 
     private List<Person> personList;
@@ -36,9 +37,7 @@ class PersonControllerTest {
 
     @Test
     void addPerson() {
-        when(personDB.addPerson(person)).thenReturn(true);
-        when(personDB.addPerson(person1)).thenReturn(true);
-        when(personDB.addPerson(person2)).thenReturn(true);
+        when(personDB.addPerson(any())).thenReturn(true);
         assertTrue(personController.addPerson(person));
         assertTrue(personController.addPerson(person1));
         assertFalse(personController.addPerson(person2));
@@ -53,27 +52,23 @@ class PersonControllerTest {
 
     @Test
     void selectPerson() {
-        when(personDB.updatePersonEmail(person.getId(),person)).thenReturn(true);
-        when(personDB.updatePersonEmail(person1.getId(),person1)).thenReturn(true);
-        when(personDB.updatePersonEmail(person2.getId(),person2)).thenReturn(true);
-        assertTrue(personController.updatePersonEmail(person.getId(),person));
-        assertTrue(personController.updatePersonEmail(person1.getId(),person1));
-        assertFalse(personController.updatePersonEmail(person2.getId(),person2));
+        when(personDB.selectPerson(person.getId())).thenReturn(java.util.Optional.ofNullable(person));
+        when(personDB.selectPerson(person2.getId())).thenReturn(java.util.Optional.ofNullable(person3));
+        assertEquals(personController.selectPerson(person.getId()).getName(),person.getName());
+        assertNull(personController.selectPerson(person2.getId()));
+
     }
 
     @Test
     void deletePerson() {
-        when(personDB.deletePerson(person.getId())).thenReturn(true);
-        when(personDB.deletePerson(person1.getId())).thenReturn(false);
+        when(personDB.deletePerson(any())).thenReturn(true);
         assertTrue(personController.deletePerson(person.getId()));
-        assertFalse(personController.deletePerson(person1.getId()));
+        assertTrue(personController.deletePerson(person1.getId()));
     }
 
     @Test
     void updatePersonEmail() {
-        when(personDB.updatePersonEmail(person.getId(),person)).thenReturn(true);
-        when(personDB.updatePersonEmail(person1.getId(),person1)).thenReturn(true);
-        when(personDB.updatePersonEmail(person2.getId(),person2)).thenReturn(true);
+        when(personDB.updatePersonEmail(any(),any())).thenReturn(true);
         assertTrue(personController.updatePersonEmail(person.getId(),person));
         assertTrue(personController.updatePersonEmail(person1.getId(),person1));
         assertFalse(personController.updatePersonEmail(person2.getId(),person2));
