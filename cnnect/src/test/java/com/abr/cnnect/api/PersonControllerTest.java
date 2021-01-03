@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import static java.util.Optional.ofNullable;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -53,8 +54,8 @@ class PersonControllerTest {
 
     @Test
     void selectPerson() {
-        when(personDB.selectPerson(person.getId())).thenReturn(java.util.Optional.ofNullable(person));
-        when(personDB.selectPerson(person2.getId())).thenReturn(java.util.Optional.ofNullable(person3));
+        when(personDB.selectPerson(person.getId())).thenReturn(ofNullable(person));
+        when(personDB.selectPerson(person2.getId())).thenReturn(ofNullable(null));
         assertEquals(personController.selectPerson(person.getId()).getName(),person.getName());
         assertNull(personController.selectPerson(person2.getId()));
 
