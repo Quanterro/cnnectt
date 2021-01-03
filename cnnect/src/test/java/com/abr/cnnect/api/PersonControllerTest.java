@@ -36,13 +36,12 @@ class PersonControllerTest {
 
     @Test
     void addPerson() {
-		when(personDB.addPerson(person)).thenReturn(true);
+        when(personDB.addPerson(person)).thenReturn(true);
         when(personDB.addPerson(person1)).thenReturn(true);
         when(personDB.addPerson(person2)).thenReturn(true);
-		assertTrue(personController.addPerson(person));
-		assertTrue(personController.addPerson(person1));
+        assertTrue(personController.addPerson(person));
+        assertTrue(personController.addPerson(person1));
         assertFalse(personController.addPerson(person2));
-
     }
 
     @Test
