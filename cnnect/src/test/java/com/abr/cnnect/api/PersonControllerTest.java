@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -37,7 +38,7 @@ class PersonControllerTest {
 
     @Test
     void addPerson() {
-        when(personDB.addPerson(any())).thenReturn(true);
+        when(personDB.addPerson(any(Person.class))).thenReturn(true);
         assertTrue(personController.addPerson(person));
         assertTrue(personController.addPerson(person1));
         assertFalse(personController.addPerson(person2));
@@ -61,14 +62,14 @@ class PersonControllerTest {
 
     @Test
     void deletePerson() {
-        when(personDB.deletePerson(any())).thenReturn(true);
+        when(personDB.deletePerson(any(UUID.class))).thenReturn(true);
         assertTrue(personController.deletePerson(person.getId()));
         assertTrue(personController.deletePerson(person1.getId()));
     }
 
     @Test
     void updatePersonEmail() {
-        when(personDB.updatePersonEmail(any(),any())).thenReturn(true);
+        when(personDB.updatePersonEmail(any(UUID.class),any(Person.class))).thenReturn(true);
         assertTrue(personController.updatePersonEmail(person.getId(),person));
         assertTrue(personController.updatePersonEmail(person1.getId(),person1));
         assertFalse(personController.updatePersonEmail(person2.getId(),person2));
